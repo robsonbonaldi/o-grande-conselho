@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Grande Conselho — Sabedoria Atemporal para Decisões que Importam</title>
+<meta name="description" content="Consulte os 15 maiores pensadores da história. Jesus Cristo, Warren Buffett, Steve Jobs, Carl Jung e outros respondem suas perguntas com sabedoria real.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#c9a84c;--gold-light:#e8d5a3;--gold-bright:#f0c050;--gold-dim:#7a5c1e;
+  --bg:#080604;--bg-card:#100d08;--bg-panel:#141008;
+  --text:#e8dcc8;--text-dim:#6a5a42;--text-mid:#a08060;
+  --border:#1e1810;--border-gold:#2e2210;--border-bright:#4a3518;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;}
+
+/* GLOW */
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 100% 60% at 50% 0%,rgba(201,168,76,.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px 80px;position:relative;z-index:1;}
+
+.hero-orn{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:20px;}
+.hero-orn::before,.hero-orn::after{content:'';flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+.hero-orn span{color:var(--gold-dim);font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;}
+
+.crown{font-size:40px;display:block;margin-bottom:20px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(201,168,76,.5));}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+h1{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(28px,7vw,72px);color:var(--gold);letter-spacing:4px;line-height:1.05;text-shadow:0 0 80px rgba(201,168,76,.3);margin-bottom:20px;}
+h1 span{display:block;font-size:clamp(14px,3vw,28px);font-weight:400;letter-spacing:8px;color:var(--gold-dim);margin-bottom:8px;}
+
+.hero-sub{font-size:clamp(18px,3vw,26px);font-style:italic;font-weight:300;color:var(--text-mid);line-height:1.6;max-width:680px;margin:0 auto 40px;}
+
+.hero-cta{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.btn-primary{display:inline-block;background:linear-gradient(135deg,#2a1f0a,#1a1508);border:1px solid var(--gold);color:var(--gold);font-family:'Cinzel',serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;padding:20px 48px;text-decoration:none;transition:all .3s;position:relative;overflow:hidden;border-radius:2px;}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.15),transparent);opacity:0;transition:opacity .3s;}
+.btn-primary:hover::before{opacity:1;}
+.btn-primary:hover{box-shadow:0 0 50px rgba(201,168,76,.25);transform:translateY(-2px);}
+.btn-price{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--text-dim);}
+.btn-price strong{color:var(--gold-light);}
+
+.scroll-hint{margin-top:60px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.5;}
+.scroll-hint span{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:var(--text-dim);}
+.scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold-dim),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ── DIVIDER ── */
+.section-div{display:flex;align-items:center;gap:20px;padding:0 24px;max-width:900px;margin:0 auto;}
+.section-div::before,.section-div::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border-bright),transparent);}
+.section-div-orn{display:flex;gap:8px;align-items:center;}
+.section-div-orn span{width:6px;height:6px;background:var(--gold-dim);transform:rotate(45deg);display:block;}
+.section-div-orn span:nth-child(2){background:var(--gold);width:8px;height:8px;}
+
+/* ── SECTIONS ── */
+section{padding:80px 24px;position:relative;z-index:1;}
+.sec-inner{max-width:900px;margin:0 auto;}
+.sec-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold-dim);text-align:center;display:block;margin-bottom:16px;}
+.sec-title{font-family:'Cinzel',serif;font-size:clamp(22px,4vw,40px);color:var(--gold-light);text-align:center;line-height:1.2;margin-bottom:16px;font-weight:600;}
+.sec-body{font-size:clamp(17px,2.5vw,22px);font-style:italic;color:var(--text-mid);text-align:center;line-height:1.7;max-width:640px;margin:0 auto 48px;}
+
+/* ── PROBLEMA ── */
+.problem{background:linear-gradient(135deg,#0a0806,#0e0b06);}
+.problem-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.problem-item{background:rgba(0,0,0,.3);border:1px solid var(--border-gold);border-radius:6px;padding:24px 20px;}
+.problem-item .pi-icon{font-size:28px;display:block;margin-bottom:12px;}
+.problem-item p{font-size:17px;line-height:1.7;color:var(--text-mid);font-style:italic;}
+.problem-item strong{color:var(--text);font-style:normal;}
+
+/* ── CONSELHEIROS ── */
+.advisors-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:40px;}
+@media(max-width:600px){.advisors-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:380px){.advisors-grid{grid-template-columns:repeat(2,1fr);}}
+.adv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:16px 8px;text-align:center;transition:all .25s;position:relative;overflow:hidden;}
+.adv-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.05),transparent);opacity:0;transition:opacity .25s;}
+.adv-card:hover::before{opacity:1;}
+.adv-card:hover{border-color:var(--border-bright);transform:translateY(-3px);}
+.adv-card.jesus{border-color:var(--gold-dim);box-shadow:0 0 20px rgba(201,168,76,.1);}
+.adv-icon{font-size:26px;display:block;margin-bottom:6px;}
+.adv-name{font-family:'Cinzel',serif;font-size:7.5px;color:var(--gold-light);display:block;line-height:1.4;}
+.adv-role{font-size:10px;color:var(--text-dim);font-style:italic;display:block;margin-top:3px;line-height:1.3;}
+
+/* ── COMO FUNCIONA ── */
+.how{background:linear-gradient(135deg,#0c0904,#080604);}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;}
+.step{text-align:center;padding:24px 16px;}
+.step-num{font-family:'Cinzel',serif;font-size:36px;color:var(--border-bright);font-weight:900;display:block;margin-bottom:12px;line-height:1;}
+.step-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;color:var(--gold-light);text-transform:uppercase;display:block;margin-bottom:10px;}
+.step p{font-size:16px;color:var(--text-dim);font-style:italic;line-height:1.65;}
+
+/* ── DEPOIMENTOS ── */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.testi{background:linear-gradient(135deg,var(--bg-panel),var(--bg-card));border:1px solid var(--border-gold);border-radius:6px;padding:24px 20px;position:relative;}
+.testi::before{content:'❝';position:absolute;top:12px;right:16px;font-size:36px;color:var(--border-bright);opacity:.5;font-family:'Cormorant Garamond',serif;}
+.testi-text{font-size:17px;font-style:italic;line-height:1.75;color:var(--text-mid);margin-bottom:16px;}
+.testi-author{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;color:var(--gold-dim);text-transform:uppercase;}
+
+/* ── PREÇO ── */
+.price-section{text-align:center;}
+.price-card{background:linear-gradient(135deg,#120e06,#0c0904);border:1px solid var(--gold-dim);border-radius:8px;padding:48px 32px;max-width:480px;margin:0 auto;position:relative;overflow:hidden;}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.price-tag{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:var(--gold-dim);text-transform:uppercase;display:block;margin-bottom:16px;}
+.price-value{font-family:'Cinzel',serif;font-size:clamp(48px,8vw,72px);color:var(--gold);font-weight:900;line-height:1;margin-bottom:4px;}
+.price-period{font-size:18px;color:var(--text-dim);font-style:italic;margin-bottom:28px;display:block;}
+.price-features{list-style:none;margin-bottom:32px;text-align:left;}
+.price-features li{font-size:17px;color:var(--text-mid);padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.price-features li:last-child{border-bottom:none;}
+.price-features li::before{content:'✦';color:var(--gold-dim);font-size:10px;flex-shrink:0;}
+.price-btn{display:block;background:linear-gradient(135deg,#2a1f0a,#1a1508);border:1px solid var(--gold);color:var(--gold);font-family:'Cinzel',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;padding:18px 32px;text-decoration:none;transition:all .3s;border-radius:2px;margin-bottom:16px;}
+.price-btn:hover{box-shadow:0 0 40px rgba(201,168,76,.2);}
+.price-guarantee{font-size:14px;color:var(--text-dim);font-style:italic;}
+
+/* ── FAQ ── */
+.faq-items{max-width:680px;margin:0 auto;}
+.faq-item{border-bottom:1px solid var(--border-gold);padding:20px 0;}
+.faq-q{font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;color:var(--gold-light);margin-bottom:10px;}
+.faq-a{font-size:17px;color:var(--text-dim);font-style:italic;line-height:1.7;}
+
+/* ── FINAL CTA ── */
+.final-cta{text-align:center;padding:100px 24px;position:relative;z-index:1;}
+.final-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(201,168,76,.04) 0%,transparent 70%);}
+.final-title{font-family:'Cinzel',serif;font-size:clamp(24px,5vw,48px);color:var(--gold);font-weight:900;letter-spacing:3px;margin-bottom:16px;line-height:1.2;}
+.final-sub{font-size:clamp(17px,2.5vw,22px);font-style:italic;color:var(--text-mid);margin-bottom:36px;line-height:1.6;}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:24px;border-top:1px solid var(--border);}
+footer p{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(--text-dim);text-transform:uppercase;}
+footer a{color:var(--gold-dim);text-decoration:none;}
+
+/* ── FOUNDER BANNER ── */
+.founder-bar{background:linear-gradient(135deg,#1a1205,#120d03);border-bottom:1px solid var(--gold-dim);padding:10px 24px;text-align:center;position:sticky;top:0;z-index:99;}
+.founder-bar p{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px;color:var(--gold-light);}
+.founder-bar span{color:var(--gold-dim);}
+.founder-bar strong{color:var(--gold);}
+
+/* ── STICKY CTA ── */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;background:rgba(8,6,4,.95);border-top:1px solid var(--border-gold);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;z-index:100;backdrop-filter:blur(10px);transform:translateY(100%);transition:transform .4s ease;}
+.sticky-cta.show{transform:translateY(0);}
+.sticky-info{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:var(--text-dim);}
+.sticky-info strong{color:var(--gold);display:block;font-size:13px;margin-top:2px;}
+.sticky-btn{background:linear-gradient(135deg,#2a1f0a,#1a1508);border:1px solid var(--gold);color:var(--gold);font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:12px 24px;text-decoration:none;border-radius:2px;white-space:nowrap;}
+
+@media(max-width:480px){
+  .sticky-cta{flex-direction:column;gap:10px;text-align:center;}
+  .sticky-btn{width:100%;text-align:center;}
+}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- ── FOUNDER BANNER ── -->
+<div class="founder-bar">
+  <p>⏳ &nbsp;<strong>Preço de Fundador — R$ 37/mês</strong> &nbsp;<span>·</span>&nbsp; Válido até <strong>30 de abril</strong> &nbsp;<span>·</span>&nbsp; Após essa data: R$ 57/mês</p>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-orn"><span>Uma experiência única</span></div>
+  <span class="crown">♛</span>
+  <h1>
+    <span>O Grande</span>
+    CONSELHO
+  </h1>
+  <p class="hero-sub">E se você pudesse sentar à mesa com Jesus Cristo, Warren Buffett, Steve Jobs e mais 12 dos maiores pensadores da história — e fazer qualquer pergunta?</p>
+  <div class="hero-cta">
+    <a href="https://pay.kiwify.com.br/tMYua93" class="btn-primary">⚜ &nbsp; Quero Acessar o Conselho &nbsp; ⚜</a>
+    <span class="btn-price">Preço de Fundador <strong>R$ 37/mês</strong> · válido até 30 de abril</span>
+  </div>
+  <div class="scroll-hint">
+    <span>Saiba mais</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="section-div"><div class="section-div-orn"><span></span><span></span><span></span></div></div>
+
+<!-- ── PROBLEMA ── -->
+<section class="problem">
+  <div class="sec-inner">
+    <span class="sec-tag fade-up">O desafio das grandes decisões</span>
+    <h2 class="sec-title fade-up">Você já se sentiu assim?</h2>
+    <div class="problem-items">
+      <div class="problem-item fade-up">
+        <span class="pi-icon">🤯</span>
+        <p><strong>Decisões importantes demais</strong> para tomar sozinho — e conselheiros de verdade custam fortunas ou simplesmente não existem.</p>
+      </div>
+      <div class="problem-item fade-up">
+        <span class="pi-icon">🌀</span>
+        <p><strong>Pensamentos em loop</strong> — você já sabe o que precisa fazer, mas falta clareza, coragem ou a perspectiva certa para agir.</p>
+      </div>
+      <div class="problem-item fade-up">
+        <span class="pi-icon">📚</span>
+        <p><strong>Sabedoria existe aos montes</strong> em livros, biografias e filosofias — mas sintetizá-la para o seu momento leva anos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-div"><div class="section-div-orn"><span></span><span></span><span></span></div></div>
+
+<!-- ── SOLUÇÃO ── -->
+<section>
+  <div class="sec-inner">
+    <span class="sec-tag fade-up">A solução</span>
+    <h2 class="sec-title fade-up">15 Grandes Mentes.<br>Uma Pergunta. Sabedoria Real.</h2>
+    <p class="sec-body fade-up">O Grande Conselho reúne os maiores pensadores, líderes e transformadores da história em um único lugar — prontos para responder qualquer dilema, decisão ou dúvida que você traga.</p>
+
+    <div class="advisors-grid fade-up">
+      <div class="adv-card jesus"><span class="adv-icon">✝</span><span class="adv-name">Jesus Cristo</span><span class="adv-role">Sabedoria Espiritual</span></div>
+      <div class="adv-card"><span class="adv-icon">💰</span><span class="adv-name">Warren Buffett</span><span class="adv-role">Valor e Paciência</span></div>
+      <div class="adv-card"><span class="adv-icon">🍎</span><span class="adv-name">Steve Jobs</span><span class="adv-role">Inovação e Visão</span></div>
+      <div class="adv-card"><span class="adv-icon">🧠</span><span class="adv-name">Carl Jung</span><span class="adv-role">Psicologia Profunda</span></div>
+      <div class="adv-card"><span class="adv-icon">✊</span><span class="adv-name">Nelson Mandela</span><span class="adv-role">Resiliência</span></div>
+      <div class="adv-card"><span class="adv-icon">⚖️</span><span class="adv-name">Aristóteles</span><span class="adv-role">Lógica e Ética</span></div>
+      <div class="adv-card"><span class="adv-icon">🏀</span><span class="adv-name">Michael Jordan</span><span class="adv-role">Alta Performance</span></div>
+      <div class="adv-card"><span class="adv-icon">🎙️</span><span class="adv-name">Oprah Winfrey</span><span class="adv-role">Propósito e Voz</span></div>
+      <div class="adv-card"><span class="adv-icon">🔬</span><span class="adv-name">Marie Curie</span><span class="adv-role">Determinação</span></div>
+      <div class="adv-card"><span class="adv-icon">👗</span><span class="adv-name">Coco Chanel</span><span class="adv-role">Marca e Identidade</span></div>
+      <div class="adv-card"><span class="adv-icon">🔥</span><span class="adv-name">Tony Robbins</span><span class="adv-role">Transformação</span></div>
+      <div class="adv-card"><span class="adv-icon">📖</span><span class="adv-name">Napoleon Hill</span><span class="adv-role">Mentalidade Rica</span></div>
+      <div class="adv-card"><span class="adv-icon">⚔️</span><span class="adv-name">Alexandre</span><span class="adv-role">Conquista</span></div>
+      <div class="adv-card"><span class="adv-icon">🏛️</span><span class="adv-name">Sócrates</span><span class="adv-role">Questionamento</span></div>
+      <div class="adv-card"><span class="adv-icon">🌹</span><span class="adv-name">Simone de Beauvoir</span><span class="adv-role">Liberdade</span></div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="https://pay.kiwify.com.br/tMYua93" class="btn-primary fade-up">⚜ &nbsp; Começar agora &nbsp; ⚜</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-div"><div class="section-div-orn"><span></span><span></span><span></span></div></div>
+
+<!-- ── COMO FUNCIONA ── -->
+<section class="how">
+  <div class="sec-inner">
+    <span class="sec-tag fade-up">Simples assim</span>
+    <h2 class="sec-title fade-up">Como Funciona</h2>
+    <div class="steps">
+      <div class="step fade-up">
+        <span class="step-num">01</span>
+        <span class="step-title">Assine</span>
+        <p>Acesso completo por R$ 37/mês. Cancele quando quiser, sem burocracia.</p>
+      </div>
+      <div class="step fade-up">
+        <span class="step-num">02</span>
+        <span class="step-title">Acesse</span>
+        <p>Receba seu login por e-mail em menos de 1 minuto após a compra.</p>
+      </div>
+      <div class="step fade-up">
+        <span class="step-num">03</span>
+        <span class="step-title">Consulte</span>
+        <p>Escolha seus conselheiros, faça sua pergunta e receba sabedoria profunda e acionável.</p>
+      </div>
+      <div class="step fade-up">
+        <span class="step-num">04</span>
+        <span class="step-title">Decida</span>
+        <p>Com clareza, perspectiva e a sabedoria de séculos ao seu lado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-div"><div class="section-div-orn"><span></span><span></span><span></span></div></div>
+
+<!-- ── DEPOIMENTOS ── -->
+<section>
+  <div class="sec-inner">
+    <span class="sec-tag fade-up">Experiências reais</span>
+    <h2 class="sec-title fade-up">O que dizem os membros</h2>
+    <div class="testimonials">
+      <div class="testi fade-up">
+        <p class="testi-text">"Estava travado em uma decisão de negócios há semanas. Em uma consulta, Jesus e Warren Buffett me deram a perspectiva que eu precisava. Tomei a decisão no mesmo dia."</p>
+        <span class="testi-author">— Carlos M., Empresário</span>
+      </div>
+      <div class="testi fade-up">
+        <p class="testi-text">"A voz de Carl Jung me fez entender um padrão que eu repetia há anos sem perceber. Isso vale muito mais do que R$ 37."</p>
+        <span class="testi-author">— Fernanda L., Líder Executiva</span>
+      </div>
+      <div class="testi fade-up">
+        <p class="testi-text">"Consulto o Grande Conselho antes de qualquer decisão importante. É como ter um board de conselheiros disponível 24 horas."</p>
+        <span class="testi-author">— Ricardo A., Empreendedor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-div"><div class="section-div-orn"><span></span><span></span><span></span></div></div>
+
+<!-- ── PREÇO ── -->
+<section class="price-section">
+  <div class="sec-inner">
+    <span class="sec-tag fade-up">Investimento</span>
+    <h2 class="sec-title fade-up">Um Conselho que Vale Fortunas.<br>Por Menos que um Jantar.</h2>
+    <div class="price-card fade-up">
+      <span class="price-tag">⏳ Preço de Fundador · Válido até 30 de abril</span>
+      <div class="price-value">R$37</div>
+      <span class="price-period">por mês · após 30/04 será R$ 57/mês</span>
+      <ul class="price-features">
+        <li>Acesso ilimitado a todos os 15 conselheiros</li>
+        <li>Jesus Cristo como âncora espiritual — 40% do peso</li>
+        <li>Síntese integrada de todas as vozes</li>
+        <li>Disponível 24h no celular e computador</li>
+        <li>Cancele quando quiser, sem multa</li>
+        <li>Novos conselheiros em breve</li>
+      </ul>
+      <a href="https://pay.kiwify.com.br/tMYua93" class="price-btn">⚜ &nbsp; Acessar O Grande Conselho &nbsp; ⚜</a>
+      <p class="price-guarantee">🛡 Garantia de 7 dias. Se não gostar, devolvemos 100%.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-div"><div class="section-div-orn"><span></span><span></span><span></span></div></div>
+
+<!-- ── FAQ ── -->
+<section>
+  <div class="sec-inner">
+    <span class="sec-tag fade-up">Dúvidas frequentes</span>
+    <h2 class="sec-title fade-up">Perguntas Frequentes</h2>
+    <div class="faq-items">
+      <div class="faq-item fade-up">
+        <p class="faq-q">Como recebo meu acesso após a compra?</p>
+        <p class="faq-a">Em menos de 1 minuto após a confirmação do pagamento, você recebe um e-mail com seu login e senha. Sem espera, sem burocracia.</p>
+      </div>
+      <div class="faq-item fade-up">
+        <p class="faq-q">As respostas são genéricas ou personalizadas?</p>
+        <p class="faq-a">Cada resposta é gerada especificamente para a sua pergunta, na voz autêntica de cada conselheiro — com referências reais à filosofia, obras e contexto de cada um.</p>
+      </div>
+      <div class="faq-item fade-up">
+        <p class="faq-q">Posso cancelar a qualquer momento?</p>
+        <p class="faq-a">Sim. Sem multa, sem carência. Você cancela com um clique e o acesso encerra ao fim do período pago.</p>
+      </div>
+      <div class="faq-item fade-up">
+        <p class="faq-q">Funciona no celular?</p>
+        <p class="faq-a">Sim, totalmente otimizado para celular, tablet e computador. Acesse de onde estiver.</p>
+      </div>
+      <div class="faq-item fade-up">
+        <p class="faq-q">Quantas consultas posso fazer por mês?</p>
+        <p class="faq-a">Ilimitadas. Consulte quantas vezes precisar, com qualquer combinação de conselheiros.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ── -->
+<section class="final-cta">
+  <span class="crown" style="font-size:36px;">♛</span>
+  <h2 class="final-title fade-up">O Conselho está pronto.<br>E você?</h2>
+  <p class="final-sub fade-up">Grandes decisões merecem grandes conselheiros.<br>Por R$ 37 por mês, a sabedoria de séculos está ao seu alcance.</p>
+  <a href="https://pay.kiwify.com.br/tMYua93" class="btn-primary fade-up">⚜ &nbsp; Entrar para O Grande Conselho &nbsp; ⚜</a>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>O Grande Conselho &nbsp;·&nbsp; ograndeconselho.com &nbsp;·&nbsp; <a href="https://robsonbonaldi.github.io/o-grande-conselho">Área de Membros</a></p>
+</footer>
+
+<!-- ── STICKY CTA ── -->
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-info">Preço de Fundador até 30/04<strong>R$ 37/mês · Após: R$ 57</strong></div>
+  <a href="https://pay.kiwify.com.br/tMYua93" class="sticky-btn">⚜ Assinar agora</a>
+</div>
+
+<script>
+// Fade up on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Sticky CTA
+window.addEventListener('scroll', () => {
+  const sticky = document.getElementById('stickyCta');
+  if(window.scrollY > 600) sticky.classList.add('show');
+  else sticky.classList.remove('show');
+});
+</script>
+</body>
+</html>
