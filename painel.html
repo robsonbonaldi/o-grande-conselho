@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel — O Grande Conselho</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c9a84c;--gold-light:#e8d5a3;--gold-dim:#7a5c1e;--bg:#080604;--bg-card:#100d08;--bg-panel:#141008;--text:#e8dcc8;--text-dim:#6a5a42;--border:#1e1810;--border-gold:#2e2210;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'EB Garamond',serif;min-height:100vh;padding:24px;}
+.wrap{max-width:1000px;margin:0 auto;}
+h1{font-family:'Cinzel',serif;color:var(--gold);font-size:24px;letter-spacing:4px;margin-bottom:8px;text-align:center;}
+.sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:var(--text-dim);text-align:center;margin-bottom:32px;text-transform:uppercase;}
+
+/* LOGIN */
+.login-box{max-width:360px;margin:80px auto 0;background:var(--bg-card);border:1px solid var(--border-gold);border-radius:6px;padding:28px;}
+.login-box label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:8px;}
+.login-box input{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--border-gold);color:var(--text);font-family:'EB Garamond',serif;font-size:16px;padding:10px 12px;outline:none;border-radius:3px;margin-bottom:16px;}
+.login-box button{width:100%;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;padding:12px;cursor:pointer;border-radius:3px;text-transform:uppercase;}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+@media(max-width:600px){.cards{grid-template-columns:1fr;}}
+.card{background:var(--bg-card);border:1px solid var(--border-gold);border-radius:6px;padding:20px;text-align:center;}
+.card-num{font-family:'Cinzel',serif;font-size:40px;color:var(--gold);font-weight:700;display:block;line-height:1;}
+.card-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;margin-top:8px;display:block;}
+
+/* TABLES */
+.section-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-dim);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-gold);}
+.table-wrap{overflow-x:auto;margin-bottom:32px;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border-gold);}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;}
+tr:hover td{background:rgba(201,168,76,.03);}
+.badge{display:inline-block;font-family:'Cinzel',serif;font-size:7px;letter-spacing:1px;padding:2px 8px;border-radius:10px;text-transform:uppercase;}
+.badge-ativo{background:rgba(50,150,50,.15);border:1px solid rgba(50,150,50,.3);color:#6a9e6a;}
+.badge-inativo{background:rgba(150,50,50,.15);border:1px solid rgba(150,50,50,.3);color:#d48;}
+
+.refresh-btn{background:transparent;border:1px solid var(--border-gold);color:var(--text-dim);font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;padding:8px 18px;cursor:pointer;border-radius:3px;text-transform:uppercase;margin-bottom:24px;}
+.refresh-btn:hover{border-color:var(--gold-dim);color:var(--gold-light);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>♛ PAINEL</h1>
+  <p class="sub">O Grande Conselho · Analytics</p>
+
+  <div id="loginBox" class="login-box">
+    <label>Senha de acesso</label>
+    <input type="password" id="painelSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')carregar()">
+    <button onclick="carregar()">Entrar</button>
+  </div>
+
+  <div id="dashboard" style="display:none;">
+    <button class="refresh-btn" onclick="carregar()">↺ Atualizar dados</button>
+
+    <div class="cards" id="cards"></div>
+
+    <p class="section-title">Membros</p>
+    <div class="table-wrap">
+      <table id="tUsuarios">
+        <thead><tr><th>Nome</th><th>E-mail</th><th>Status</th><th>Cadastro</th><th>Último acesso</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <p class="section-title">Últimas Consultas</p>
+    <div class="table-wrap">
+      <table id="tConsultas">
+        <thead><tr><th>Data</th><th>Pergunta</th><th>Contexto</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const BACKEND = 'https://ograndeconselho-backend-production.up.railway.app';
+let senhaAtual = '';
+
+function fmt(d){ if(!d) return '—'; return new Date(d).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}); }
+
+async function carregar(){
+  const s = document.getElementById('painelSenha').value || senhaAtual;
+  if(!s){ alert('Digite a senha'); return; }
+  senhaAtual = s;
+
+  try {
+    const res = await fetch(`${BACKEND}/painel?senha=${encodeURIComponent(s)}`);
+    if(res.status === 401){ alert('Senha incorreta'); return; }
+    const data = await res.json();
+
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+
+    // Cards
+    document.getElementById('cards').innerHTML = `
+      <div class="card"><span class="card-num">${data.resumo.usuarios_ativos}</span><span class="card-label">Membros Ativos</span></div>
+      <div class="card"><span class="card-num">${data.resumo.total_usuarios}</span><span class="card-label">Total de Membros</span></div>
+      <div class="card"><span class="card-num">${data.resumo.total_consultas}</span><span class="card-label">Consultas Realizadas</span></div>
+    `;
+
+    // Usuários
+    const tbU = document.querySelector('#tUsuarios tbody');
+    tbU.innerHTML = (data.usuarios || []).map(u => `
+      <tr>
+        <td>${u.nome || '—'}</td>
+        <td>${u.email}</td>
+        <td><span class="badge ${u.ativo ? 'badge-ativo' : 'badge-inativo'}">${u.ativo ? 'Ativo' : 'Inativo'}</span></td>
+        <td>${fmt(u.created_at)}</td>
+        <td>${fmt(u.ultimo_acesso)}</td>
+      </tr>
+    `).join('');
+
+    // Consultas
+    const tbC = document.querySelector('#tConsultas tbody');
+    tbC.innerHTML = (data.ultimas_consultas || []).map(c => `
+      <tr>
+        <td style="white-space:nowrap">${fmt(c.created_at)}</td>
+        <td>${c.pergunta || '—'}</td>
+        <td>${c.contexto || '—'}</td>
+      </tr>
+    `).join('');
+
+  } catch(e) {
+    alert('Erro ao carregar: ' + e.message);
+  }
+}
+</script>
+</body>
+</html>
