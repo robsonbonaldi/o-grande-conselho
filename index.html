@@ -324,8 +324,9 @@ async function askCouncil(){
   const advisorList=active.map(a=>a.name+' ('+a.era+')').join(', ');
   const ids=nonJesus.map(a=>a.id).join(', ');
   const sys=`Você está simulando O Grande Conselho.\nRetorne APENAS um objeto JSON válido.\n{\n  "jesus": "4-5 parágrafos na voz de Jesus Cristo.",\n  "advisors": [{"id":"id_exato","response":"3-4 parágrafos na voz autêntica."}],\n  "synthesis": "4-5 parágrafos. Conclusão acionável."\n}`;
-  const usr=`Pergunta: ${q}${ctx?'\nContexto: '+ctx:''}\n\nQuem consulta: ${userName} (use o nome para identificar o gênero e adapte pronomes, tratamentos e tom ao gênero percebido — ex: "Querida Amanda", "você que", etc.)\n\nMembros ativos: ${advisorList}\n\nIDs para advisors (excluindo jesus): ${ids}\n\nSeja substancial e específico.`;
-  try{
+const primeiroNome=userName.split(' ')[0];
+const genero=['amanda','ana','maria','julia','juliana','fernanda','patricia','camila','beatriz','larissa','leticia','gabriela','isabela','carolina','mariana','lucia','claudia','andrea','monica','sandra','vanessa','viviane','simone','cristina','renata','alessandra','natalia','priscila','debora','elaine'].includes(primeiroNome.toLowerCase())?'feminino':'masculino';
+const usr=`Pergunta: ${q}${ctx?'\nContexto: '+ctx:''}\n\nIMPORTANTE: Quem consulta é ${userName}. Gênero: ${genero}. TODOS os conselheiros SEM EXCEÇÃO devem usar pronomes e tratamentos no ${genero}. Ex ${genero==='feminino'?'"Querida, você que, ela"':'"Querido, você que, ele"'}. Isso é obrigatório para todos os conselheiros incluindo Jesus e Napoleon Hill.\n\nMembros ativos: ${advisorList}\n\nIDs para advisors (excluindo jesus): ${ids}\n\nSeja substancial e específico.`;  try{
     const res=await fetch(BACKEND+'/consultar',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:sessionToken,pergunta:q,contexto:ctx,system:sys,user_message:usr})});
     if(res.status===401||res.status===403){fazerLogout();showErr('⚠ Sessão expirada. Faça login novamente.');return;}
     if(!res.ok){const errData=await res.json().catch(()=>({}));throw new Error(errData.error||'Erro no servidor');}
