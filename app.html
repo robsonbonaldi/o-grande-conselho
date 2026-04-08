@@ -147,6 +147,26 @@ footer p{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(-
 .err{background:rgba(120,30,30,.15);border:1px solid rgba(180,50,60,.3);border-radius:4px;padding:12px 16px;margin-bottom:14px;font-size:14px;color:#d06070;display:none;}
 .err.show{display:block;}
 @supports(padding-bottom:env(safe-area-inset-bottom)){.wrap{padding-bottom:calc(80px + env(safe-area-inset-bottom));}}
+
+/* ── BOTÃO COPIAR ── */
+.copy-btn{background:transparent;border:1px solid var(--border-gold);color:var(--text-dim);font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;padding:5px 12px;cursor:pointer;border-radius:3px;transition:all .2s;text-transform:uppercase;margin-top:12px;display:inline-flex;align-items:center;gap:6px;}
+.copy-btn:hover{border-color:var(--gold-dim);color:var(--gold-light);}
+.copy-btn.copied{border-color:var(--gold);color:var(--gold);}
+.copy-row{text-align:right;margin-top:8px;}
+
+/* ── BOTÃO PDF ── */
+.pdf-row{text-align:center;margin-bottom:20px;}
+.pdf-btn{background:linear-gradient(135deg,#1a1205,#120d03);border:1px solid var(--gold-dim);color:var(--gold);font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:14px 32px;cursor:pointer;border-radius:3px;transition:all .25s;display:inline-flex;align-items:center;gap:10px;}
+.pdf-btn:hover{box-shadow:0 0 30px rgba(201,168,76,.2);border-color:var(--gold);}
+
+@media print{
+  .user-bar,.sel-ctrl,.q-panel,.sub-row,.loading,.reset-row,.pdf-row,footer,.copy-btn,.err,#loginScreen,.w-bar,.grid,.divider{display:none!important;}
+  body{background:#fff;color:#000;}
+  .j-card,.ic,.syn{border:1px solid #ccc;background:#fff;}
+  .rb,.ib,.syn-b{color:#111;}
+  .rn,.in_,.syn-lbl{color:#333;}
+  .res-q{color:#555;}
+}
 </style>
 </head>
 <body>
@@ -213,12 +233,17 @@ footer p{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(-
       <div class="jw-badge">✝ Peso Primário — 40%</div>
       <div class="ra"><span class="ri">✝</span><div><div class="rn">Jesus Cristo</div><div class="rr">Sabedoria Espiritual e Moral</div></div></div>
       <div class="rb" id="jbody"></div>
+      <div class="copy-row"><button class="copy-btn" onclick="copiarTexto('jbody',this)">📋 Copiar</button></div>
     </div>
     <p class="sec-lbl">Vozes do Conselho</p>
     <div class="ig" id="igrid"></div>
     <div class="syn">
       <div class="syn-lbl">⚜ Síntese do Conselho — 30%</div>
       <div class="syn-b" id="synbody"></div>
+      <div class="copy-row"><button class="copy-btn" onclick="copiarTexto('synbody',this)">📋 Copiar</button></div>
+    </div>
+    <div class="pdf-row">
+      <button class="pdf-btn" onclick="salvarPDF()">📄 &nbsp; Salvar Consulta em PDF</button>
     </div>
     <div class="reset-row"><button class="reset-btn" onclick="resetAll()">↩ &nbsp; Nova Consulta</button></div>
   </div>
@@ -307,6 +332,28 @@ function showErr(msg){const e=document.getElementById('errbox');e.textContent=ms
 let progInterval;
 function startProgress(){const bar=document.getElementById('pbar');bar.style.width='0%';let w=0;progInterval=setInterval(()=>{w=Math.min(w+(Math.random()*2.5),88);bar.style.width=w+'%';},500);}
 function endProgress(){clearInterval(progInterval);document.getElementById('pbar').style.width='100%';}
+
+function copiarTexto(elementId, btn){
+  const el=document.getElementById(elementId);
+  const texto=el.innerText||el.textContent;
+  navigator.clipboard.writeText(texto).then(()=>{
+    btn.textContent='✓ Copiado!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.innerHTML='📋 Copiar';btn.classList.remove('copied');},2000);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=texto;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent='✓ Copiado!';btn.classList.add('copied');
+    setTimeout(()=>{btn.innerHTML='📋 Copiar';btn.classList.remove('copied');},2000);
+  });
+}
+
+function salvarPDF(){
+  window.print();
+}
+
 async function askCouncil(){
   const q=document.getElementById('qinput').value.trim();
   const ctx=document.getElementById('ctxinput').value.trim();
@@ -352,7 +399,7 @@ function renderResults(data,nonJesus){
     const entry=(data.advisors||[]).find(a=>a.id===adv.id);
     if(!entry)return;
     const card=document.createElement('div');card.className='ic';
-    card.innerHTML=`<div class="ih"><span class="ii">${adv.icon}</span><div><div class="in_">${adv.name}</div><div class="ie">${adv.role} · ${adv.era}</div></div></div><div class="ib">${fmt(entry.response||'')}</div>`;
+    card.innerHTML=`<div class="ih"><span class="ii">${adv.icon}</span><div><div class="in_">${adv.name}</div><div class="ie">${adv.role} · ${adv.era}</div></div></div><div class="ib" id="adv-${adv.id}">${fmt(entry.response||'')}</div><div class="copy-row"><button class="copy-btn" onclick="copiarTexto('adv-${adv.id}',this)">📋 Copiar</button></div>`;
     ig.appendChild(card);
   });
   document.getElementById('synbody').innerHTML=fmt(data.synthesis||'');
