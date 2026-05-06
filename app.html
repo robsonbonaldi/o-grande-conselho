@@ -23,7 +23,6 @@ body{
   overflow-x:hidden;
 }
 
-/* Subtle grid texture */
 body::before{
   content:'';position:fixed;inset:0;
   background-image:
@@ -54,6 +53,7 @@ h1{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(20px,5.5vw,46px);c
 
 /* ── LOGIN ── */
 #loginScreen{display:block;}
+#recoveryScreen{display:none;}
 #appScreen{display:none;}
 .login-wrap{max-width:420px;margin:20px auto 0;}
 .login-card{
@@ -95,9 +95,27 @@ h1{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(20px,5.5vw,46px);c
 .login-btn:disabled{opacity:.4;cursor:not-allowed;}
 .login-err{background:rgba(160,40,40,.07);border:1px solid rgba(160,60,60,.2);border-radius:3px;padding:10px 14px;margin-top:12px;font-size:14px;color:#9B3030;display:none;text-align:center;}
 .login-err.show{display:block;}
+.login-ok{background:rgba(40,100,40,.07);border:1px solid rgba(60,120,60,.2);border-radius:3px;padding:10px 14px;margin-top:12px;font-size:14px;color:#2D6A2D;display:none;text-align:center;}
+.login-ok.show{display:block;}
 .login-footer{text-align:center;margin-top:20px;}
 .login-footer p{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--text-dim);line-height:1.6;}
 .login-footer a{color:var(--gold-dim);text-decoration:none;border-bottom:1px solid rgba(154,116,40,.3);padding-bottom:1px;}
+.forgot-link{
+  display:block;text-align:center;margin-top:14px;
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-dim);cursor:pointer;
+  border:none;background:none;
+  transition:color .2s;
+}
+.forgot-link:hover{color:var(--gold-dim);}
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-dim);cursor:pointer;
+  border:none;background:none;margin-bottom:20px;
+  transition:color .2s;
+}
+.back-link:hover{color:var(--gold-dim);}
 
 /* ── USER BAR ── */
 .user-bar{
@@ -325,7 +343,7 @@ footer p{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(-
 @supports(padding-bottom:env(safe-area-inset-bottom)){.wrap{padding-bottom:calc(80px + env(safe-area-inset-bottom));}}
 
 @media print{
-  .user-bar,.sel-ctrl,.q-panel,.sub-row,.loading,.reset-row,.pdf-row,footer,.copy-btn,.err,#loginScreen,.w-bar,.grid,.divider{display:none!important;}
+  .user-bar,.sel-ctrl,.q-panel,.sub-row,.loading,.reset-row,.pdf-row,footer,.copy-btn,.err,#loginScreen,#recoveryScreen,.w-bar,.grid,.divider{display:none!important;}
   body{background:#fff;color:#000;}
   .j-card,.ic,.syn{border:1px solid #ccc;background:#fff;box-shadow:none;}
   .rb,.ib,.syn-b{color:#111;}
@@ -344,6 +362,7 @@ footer p{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(-
   <div class="header-ornament"><div class="orn-line"></div><span>XV Grandes Mentes</span><div class="orn-line"></div></div>
 </header>
 
+<!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-wrap">
     <div class="login-card">
@@ -352,11 +371,30 @@ footer p{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(-
       <div class="field"><label>Senha</label><input type="password" id="loginSenha" placeholder="Sua senha" autocomplete="current-password"></div>
       <button class="login-btn" onclick="fazerLogin()">⚜ &nbsp; ENTRAR &nbsp; ⚜</button>
       <div class="login-err" id="loginErr"></div>
+      <button class="forgot-link" onclick="mostrarRecuperacao()">Esqueci minha senha</button>
     </div>
     <div class="login-footer"><p>Ainda não é membro?<br><a href="https://pay.kiwify.com.br" target="_blank">Assine O Grande Conselho →</a></p></div>
   </div>
 </div>
 
+<!-- RECUPERAÇÃO DE SENHA -->
+<div id="recoveryScreen">
+  <div class="login-wrap">
+    <div class="login-card">
+      <button class="back-link" onclick="mostrarLogin()">← Voltar ao login</button>
+      <p class="login-lbl">Recuperar Acesso</p>
+      <div class="field">
+        <label>E-mail cadastrado</label>
+        <input type="email" id="recoveryEmail" placeholder="seu@email.com" autocomplete="email" autocapitalize="none">
+      </div>
+      <button class="login-btn" onclick="recuperarSenha()">⚜ &nbsp; ENVIAR NOVA SENHA &nbsp; ⚜</button>
+      <div class="login-err" id="recoveryErr"></div>
+      <div class="login-ok" id="recoveryOk">✓ Se este e-mail estiver cadastrado, você receberá sua nova senha em instantes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
 <div id="appScreen">
   <div class="user-bar">
     <div class="user-info">Bem-vindo ao Conselho<span id="userName"></span></div>
@@ -440,6 +478,7 @@ const ADVISORS=[
 let sel=new Set(ADVISORS.map(a=>a.id));
 let sessionToken=localStorage.getItem('ogc_token')||'';
 let userName=localStorage.getItem('ogc_name')||'';
+
 async function init(){
   if(sessionToken){
     try{
@@ -451,19 +490,34 @@ async function init(){
   }
   mostrarLogin();
 }
-function mostrarLogin(){document.getElementById('loginScreen').style.display='block';document.getElementById('appScreen').style.display='none';}
+
+function mostrarLogin(){
+  document.getElementById('loginScreen').style.display='block';
+  document.getElementById('recoveryScreen').style.display='none';
+  document.getElementById('appScreen').style.display='none';
+}
+function mostrarRecuperacao(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('recoveryScreen').style.display='block';
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('recoveryEmail').value=document.getElementById('loginEmail').value||'';
+  document.getElementById('recoveryErr').classList.remove('show');
+  document.getElementById('recoveryOk').classList.remove('show');
+}
 function mostrarApp(nome){
   userName=nome||'';
   document.getElementById('loginScreen').style.display='none';
+  document.getElementById('recoveryScreen').style.display='none';
   document.getElementById('appScreen').style.display='block';
   document.getElementById('userName').textContent=userName;
   renderGrid();
 }
+
 async function fazerLogin(){
   const email=document.getElementById('loginEmail').value.trim();
   const senha=document.getElementById('loginSenha').value.trim();
   const err=document.getElementById('loginErr');
-  const btn=document.querySelector('.login-btn');
+  const btn=document.querySelector('#loginScreen .login-btn');
   if(!email||!senha){err.textContent='Preencha e-mail e senha.';err.classList.add('show');return;}
   btn.disabled=true;btn.textContent='Verificando...';err.classList.remove('show');
   try{
@@ -480,8 +534,32 @@ async function fazerLogin(){
   }catch(e){err.textContent='Erro de conexão. Tente novamente.';err.classList.add('show');}
   btn.disabled=false;btn.innerHTML='⚜ &nbsp; ENTRAR &nbsp; ⚜';
 }
+
+async function recuperarSenha(){
+  const email=document.getElementById('recoveryEmail').value.trim();
+  const err=document.getElementById('recoveryErr');
+  const ok=document.getElementById('recoveryOk');
+  const btn=document.querySelector('#recoveryScreen .login-btn');
+  if(!email){err.textContent='Informe seu e-mail cadastrado.';err.classList.add('show');return;}
+  btn.disabled=true;btn.textContent='Enviando...';
+  err.classList.remove('show');ok.classList.remove('show');
+  try{
+    await fetch(BACKEND+'/auth/recuperar-senha',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    ok.classList.add('show');
+    setTimeout(()=>mostrarLogin(),4000);
+  }catch(e){err.textContent='Erro de conexão. Tente novamente.';err.classList.add('show');}
+  btn.disabled=false;btn.innerHTML='⚜ &nbsp; ENVIAR NOVA SENHA &nbsp; ⚜';
+}
+
 function fazerLogout(){localStorage.removeItem('ogc_token');localStorage.removeItem('ogc_name');sessionToken='';userName='';mostrarLogin();}
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('loginScreen').style.display!=='none')fazerLogin();});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    if(document.getElementById('loginScreen').style.display!=='none') fazerLogin();
+    else if(document.getElementById('recoveryScreen').style.display!=='none') recuperarSenha();
+  }
+});
+
 function renderGrid(){
   const g=document.getElementById('cgrid');g.innerHTML='';
   ADVISORS.forEach(a=>{
